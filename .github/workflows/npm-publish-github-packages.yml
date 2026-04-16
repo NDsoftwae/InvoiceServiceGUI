@@ -11,8 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -24,40 +23,22 @@ jobs:
         run: npm ci --legacy-peer-deps
 
       - name: Build Angular app
-        run: |
-          npm run build -- \
-            --configuration production \
-            --base-href /
+        run: npm run build -- --configuration production
 
-      # 🔴 IMPORTANT: replace "invoice-panel" with YOUR Angular project name
-      # (from angular.json → "projects" → "<name>")
-      - name: Prepare build files
-        run: |
-          mkdir deploy
-          cp -r dist/invoice-panel/* deploy/
+      # Angular build output → dist/<project-name>/
+      # We'll copy everything inside dist/
 
-      - name: Deploy to server
+      - name: Copy build folder to host
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          source: "deploy/*"
+          source: "dist/"
           target: "/var/www/invoice-panel"
 
-      - name: Fix permissions (optional but recommended)
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          script: |
-            sudo chown -R www-data:www-data /var/www/invoice-panel
-            sudo chmod -R 755 /var/www/invoice-panel
-
-      - name: Restart nginx
+      - name: Restart nginx (or your service)
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOST }}
