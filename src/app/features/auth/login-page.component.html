@@ -1,0 +1,37 @@
+<section class="login-screen">
+  <div class="login-screen__hero">
+    <p class="eyebrow">EMF Food Control</p>
+    <h1>AI-shaped operations panel for invoices and product integrity.</h1>
+    <p class="lede">
+      Authenticate once, then move between invoice review and product verification without rebuilding the shell.
+    </p>
+    <div class="hero-orb hero-orb--one"></div>
+    <div class="hero-orb hero-orb--two"></div>
+  </div>
+
+  <form class="login-card" [formGroup]="form" (ngSubmit)="submit()">
+    <div>
+      <p class="eyebrow">Secure access</p>
+      <h2>Login</h2>
+      <p>JWT-backed session for the hosted API at <strong>api.emf-food.co.uk</strong>.</p>
+    </div>
+
+    <label class="field">
+      <span>Username</span>
+      <input type="text" formControlName="username" placeholder="admin" />
+    </label>
+
+    <label class="field">
+      <span>Password</span>
+      <input type="password" formControlName="password" placeholder="••••••••" />
+    </label>
+
+    @if (error()) {
+      <p class="error">{{ error() }}</p>
+    }
+
+    <button type="submit" [disabled]="loading()">
+      {{ loading() ? 'Signing in...' : 'Enter workspace' }}
+    </button>
+  </form>
+</section>

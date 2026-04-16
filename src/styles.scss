@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root {
+  --bg: #050816;
+  --bg-accent: #0b1b30;
+  --panel: rgba(8, 18, 34, 0.74);
+  --panel-border: rgba(255, 255, 255, 0.09);
+  --text-primary: #edf6ff;
+  --text-secondary: rgba(237, 246, 255, 0.72);
+  --text-muted: rgba(237, 246, 255, 0.46);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  color: var(--text-primary);
+  background:
+    radial-gradient(circle at top, rgba(98, 245, 255, 0.12), transparent 30%),
+    radial-gradient(circle at 85% 20%, rgba(156, 123, 255, 0.12), transparent 24%),
+    linear-gradient(180deg, var(--bg), var(--bg-accent));
+  background-attachment: fixed;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(circle at center, black, transparent 85%);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+button,
+input {
+  font: inherit;
+}

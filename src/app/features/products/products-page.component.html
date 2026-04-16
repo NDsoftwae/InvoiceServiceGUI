@@ -1,0 +1,74 @@
+<section class="page">
+  <header class="page-hero">
+    <div>
+      <p class="eyebrow">Products</p>
+      <h1>Search the catalog by identity, packaging, quantity, and price signals.</h1>
+    </div>
+
+    <button type="button" class="utility-button" (click)="refresh()">Refresh</button>
+  </header>
+
+  <section class="filter-grid panel">
+    <label class="field">
+      <span>SKU</span>
+      <input type="text" [formControl]="filters.controls.sku" placeholder="Search SKU" />
+    </label>
+    <label class="field">
+      <span>Description</span>
+      <input type="text" [formControl]="filters.controls.description" placeholder="Search description" />
+    </label>
+    <label class="field">
+      <span>Size</span>
+      <input type="text" [formControl]="filters.controls.size" placeholder="Search size" />
+    </label>
+    <label class="field">
+      <span>Qty</span>
+      <input type="text" [formControl]="filters.controls.qty" placeholder="e.g. 10" />
+    </label>
+    <label class="field">
+      <span>Price</span>
+      <input type="text" [formControl]="filters.controls.price" placeholder="e.g. 12.5" />
+    </label>
+  </section>
+
+  @if (error()) {
+    <section class="panel error-panel">{{ error() }}</section>
+  }
+
+  <section class="table-panel">
+    @if (loading()) {
+      <div class="empty-state">Loading products...</div>
+    } @else if (!filteredProducts().length) {
+      <div class="empty-state">No products match the current search filters.</div>
+    } @else {
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>SKU</th>
+              <th>Description</th>
+              <th>Size</th>
+              <th>Qty</th>
+              <th>Price</th>
+              <th>Hash</th>
+              <th>Created</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of filteredProducts(); track row.id) {
+              <tr>
+                <td>{{ row.product?.sku || 'N/A' }}</td>
+                <td>{{ row.product?.description || 'N/A' }}</td>
+                <td>{{ row.product?.size || 'N/A' }}</td>
+                <td>{{ row.product?.qty ?? 'N/A' }}</td>
+                <td>{{ row.product?.price ?? 0 | currency:'GBP':'symbol':'1.2-2' }}</td>
+                <td class="hash">{{ row.product?.hash || 'N/A' }}</td>
+                <td>{{ row.createdAtUtc | date:'medium' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+</section>

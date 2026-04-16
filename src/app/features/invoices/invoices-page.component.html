@@ -1,0 +1,75 @@
+<section class="page">
+  <header class="page-hero">
+    <div>
+      <p class="eyebrow">Invoices</p>
+      <h1>Filter by trading date and inspect reconciled totals quickly.</h1>
+    </div>
+
+    <button type="button" class="utility-button" (click)="refresh()">Refresh</button>
+  </header>
+
+  <section class="stats-grid">
+    <article class="stat-card">
+      <p class="eyebrow">Visible invoices</p>
+      <strong>{{ totalCount() }}</strong>
+    </article>
+    <article class="stat-card">
+      <p class="eyebrow">Gross value</p>
+      <strong>{{ totalGross() | currency:'GBP':'symbol':'1.2-2' }}</strong>
+    </article>
+    <article class="stat-card">
+      <p class="eyebrow">Date range</p>
+      <strong>{{ filters.controls.startDate.value || 'Any' }} → {{ filters.controls.endDate.value || 'Any' }}</strong>
+    </article>
+  </section>
+
+  <section class="panel filters">
+    <label class="field">
+      <span>Start date</span>
+      <input type="date" [formControl]="filters.controls.startDate" />
+    </label>
+    <label class="field">
+      <span>End date</span>
+      <input type="date" [formControl]="filters.controls.endDate" />
+    </label>
+  </section>
+
+  @if (error()) {
+    <section class="panel error-panel">{{ error() }}</section>
+  }
+
+  <section class="table-panel">
+    @if (loading()) {
+      <div class="empty-state">Loading invoices...</div>
+    } @else if (!filteredInvoices().length) {
+      <div class="empty-state">No invoices match the selected date window.</div>
+    } @else {
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Invoice</th>
+              <th>Date</th>
+              <th>Customer</th>
+              <th>Items</th>
+              <th>Total</th>
+              <th>Created</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (invoice of filteredInvoices(); track invoice.id) {
+              <tr>
+                <td><strong>{{ invoice.invoice?.invoice_header?.invoice_number || 'Unknown' }}</strong></td>
+                <td>{{ invoice.invoice?.invoice_header?.date || 'N/A' }}</td>
+                <td>{{ invoice.invoice?.invoice_header?.customer?.name || 'Unknown customer' }}</td>
+                <td>{{ invoice.invoice?.line_items?.length || 0 }}</td>
+                <td>{{ invoice.invoice?.totals?.grand_total ?? 0 | currency:'GBP':'symbol':'1.2-2' }}</td>
+                <td>{{ invoice.createdAtUtc | date:'medium' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+</section>

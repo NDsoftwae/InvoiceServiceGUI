@@ -1,0 +1,135 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.login-screen {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.2fr minmax(320px, 420px);
+  gap: 2rem;
+  align-items: stretch;
+  padding: 2rem;
+}
+
+.login-screen__hero,
+.login-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2rem;
+  border: 1px solid var(--panel-border);
+  background: var(--panel);
+  backdrop-filter: blur(18px);
+}
+
+.login-screen__hero {
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 540px;
+  background:
+    linear-gradient(160deg, rgba(98, 245, 255, 0.2), transparent 34%),
+    linear-gradient(180deg, rgba(6, 14, 28, 0.82), rgba(12, 28, 44, 0.88));
+}
+
+.login-screen__hero h1 {
+  max-width: 14ch;
+  font-size: clamp(2.8rem, 7vw, 5.4rem);
+  line-height: 0.96;
+  margin: 0.5rem 0 1rem;
+}
+
+.lede {
+  max-width: 38rem;
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+}
+
+.hero-orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(14px);
+}
+
+.hero-orb--one {
+  inset: 3rem auto auto 3rem;
+  width: 12rem;
+  height: 12rem;
+  background: rgba(98, 245, 255, 0.22);
+}
+
+.hero-orb--two {
+  inset: auto 2rem 2rem auto;
+  width: 16rem;
+  height: 16rem;
+  background: rgba(156, 123, 255, 0.18);
+}
+
+.login-card {
+  padding: 2rem;
+  display: grid;
+  gap: 1rem;
+  align-content: center;
+}
+
+.field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.field span {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.field input {
+  width: 100%;
+  padding: 0.95rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(5, 10, 20, 0.55);
+  color: var(--text-primary);
+}
+
+button {
+  margin-top: 0.5rem;
+  padding: 1rem 1.1rem;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #62f5ff, #9c7bff);
+  color: #06101f;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.error,
+.eyebrow {
+  margin: 0;
+}
+
+.eyebrow {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--text-muted);
+}
+
+.error {
+  color: #ff8ea2;
+}
+
+@media (max-width: 960px) {
+  .login-screen {
+    grid-template-columns: 1fr;
+  }
+
+  .login-screen__hero {
+    min-height: 320px;
+  }
+}

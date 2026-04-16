@@ -1,0 +1,41 @@
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand__pulse"></div>
+      <div>
+        <p class="eyebrow">EMF Check</p>
+        <h1>Control Surface</h1>
+      </div>
+    </div>
+
+    <nav class="nav">
+      @for (item of navItems; track item.route) {
+        <a [routerLink]="item.route" routerLinkActive="active" class="nav__link">
+          <span>{{ item.label }}</span>
+          <small>{{ item.caption }}</small>
+        </a>
+      }
+    </nav>
+
+    <section class="sidebar-card">
+      <p class="eyebrow">Status</p>
+      <h2>Authenticated</h2>
+      <p>Future screens can slot into this shell by adding a route and a standalone component.</p>
+    </section>
+  </aside>
+
+  <main class="workspace">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Operator</p>
+        <h2>{{ username() }}</h2>
+      </div>
+
+      <button type="button" class="ghost-button" (click)="logout()">Logout</button>
+    </header>
+
+    <section class="workspace__content">
+      <router-outlet />
+    </section>
+  </main>
+</div>
