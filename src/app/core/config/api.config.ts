@@ -1,4 +1,4 @@
-export const API_BASE_URL = 'https://api.emf-catalogue.co.uk/invoices';
+export const API_BASE_URL = 'https://api.emf-catalogue.co.uk/invoice/api';
 
 export const APP_NAV_ITEMS = [
   { label: 'Invoices', route: '/invoices', caption: 'Date-led reconciliation' },
